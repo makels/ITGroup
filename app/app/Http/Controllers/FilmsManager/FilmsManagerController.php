@@ -3,6 +3,7 @@ namespace App\Http\Controllers\FilmsManager;
 
 use App\Http\Controllers\Controller;
 use App\Models\Film;
+use App\Models\FilmGenre;
 use App\Models\Genre;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
