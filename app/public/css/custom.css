@@ -1,0 +1,12 @@
+#films_table {
+    width: 100%;
+}
+
+.poster_img {
+    width: 70px;
+    height: auto;
+}
+
+.buttons-wrapper {
+    margin: 20px 0;
+}
