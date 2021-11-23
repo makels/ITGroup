@@ -16,6 +16,7 @@ class CreateFilmsTable extends Migration
         Schema::create('films', function (Blueprint $table) {
             $table->id();
             $table->string("film_name", 255);
+            $table->string("preview_url", 255);
             $table->integer("publish");
         });
     }
