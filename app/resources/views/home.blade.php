@@ -16,6 +16,7 @@
 
                     <div class="buttons-wrapper">
                         <button class="btn btn-primary" onclick="return false;">Add film</button>
+                        <button class="btn btn-primary" onclick="return false;">Add genre</button>
                     </div>
 
                     <table id="films_table">
@@ -30,20 +31,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($films as $film)
-                                <tr>
-                                    <td>{{ $film['id'] }}</td>
-                                    <td><img class="poster_img" src="{{ url($film['preview_url']) }}" alt="{{ $film['film_name'] }}" /></td>
-                                    <td>{{ $film['film_name'] }}</td>
-                                    <td>
-                                        @foreach($film['genres'] as $genre)
-                                            {{ $genre['genre_name'] }}<br>
-                                        @endforeach
-                                    </td>
-                                    <td>{{ $film['publish'] == 0 ? __("Not publish") : __("Publish") }}</td>
-                                    <td><a href="#">Preview</a>&nbsp;|&nbsp;<a href="#">Edit</a>&nbsp;|&nbsp;<a href="#">Delete</a></td>
-                                </tr>
-                            @endforeach
                         </tbody>
                     </table>
                 </div>

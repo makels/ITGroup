@@ -3,9 +3,9 @@ namespace App\Http\Controllers\FilmsManager;
 
 use App\Http\Controllers\Controller;
 use App\Models\Film;
-use App\Models\FilmGenre;
-use App\Models\Genre;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
 
 class FilmsManagerController extends Controller
 {
@@ -21,23 +21,60 @@ class FilmsManagerController extends Controller
     /**
      * Files table
      */
-    public function index()
+    public function index(): View
     {
-        $data = [];
+        return view('home');
+    }
+
+    public function addFilm(Request $request): View
+    {
+
+    }
+
+    public function deleteFilm(Request $request): View
+    {
+
+    }
+
+    public function getList(Request $request): JsonResponse
+    {
+        $start = $request->post("start");
+        $length = $request->post("length");
+        $searchValue = $request->post("search")["value"];
+
+        $list = [];
         $filmModel = new Film();
-        $films = $filmModel->getAll();
-        $data["films"] = $films;
-        return view('home', $data);
-    }
-
-    public function setGenres()
-    {
-        for($i = 1; $i <= 36; $i++) {
-            $sql = sprintf("INSERT INTO `films_genres` (`film_id`, `genre_id`) VALUES (%s, %s)", $i, rand(1,4));
-            DB::insert($sql);
+        $films = $filmModel->getPage($searchValue, $start, $length);
+        foreach($films as $film) {
+            $genres = [];
+            foreach ($film["genres"] as $genre) {
+                $genres[] = $genre['genre_name'];
+            }
+            $list[] = [
+                $film["id"],
+                '<img class="poster_img" src="' . url($film['preview_url']) . '" alt="' . $film['film_name'] . '" />',
+                $film['film_name'],
+                implode(", ", $genres),
+                $film["publish"] == 0 ? "Not publish" : "Publish",
+                '<a href="#">Preview</a>&nbsp;|&nbsp;<a href="#">Edit</a>&nbsp;|&nbsp;<a href="#">Delete</a>'
+            ];
         }
+        return response()->json([
+            "data" => $list,
+            "recordsTotal" => $filmModel->getTotalCount($searchValue),
+            "totalPages" => 3,
+            "currentPage" => 1
+        ]);
     }
 
+    public function getListByGenre(Request $request)
+    {
 
+    }
+
+    public function preview(Request $request)
+    {
+
+    }
 
 }

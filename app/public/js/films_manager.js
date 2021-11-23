@@ -8,12 +8,17 @@ let FilmsManager = function() {
     this.initComponents = function() {
         let _this = this;
         $('#films_table').DataTable({
-            "ordering": true,
+            "ordering": false,
             "bPaginate": true,
             "bFilter": true,
+            "bProcessing": true,
+            "bServerSide": true,
             "ajax": {
-                "url": "/api/getFilms",
-                "type": "POST"
+                "url": "/films/list",
+                "type": "POST",
+                "data": {
+                    "_token": $("#scrf_token").val()
+                }
             }
         });
     }
