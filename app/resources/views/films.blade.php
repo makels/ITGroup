@@ -15,8 +15,8 @@
                     @endif
 
                     <div class="buttons-wrapper">
-                        <button class="btn btn-primary" onclick="return false;">Add film</button>
-                        <button class="btn btn-primary" onclick="return false;">Add genre</button>
+                        <button class="btn btn-primary" onclick="window.location.href='{{ url('/films/add') }}'">Add film</button>
+                        <button class="btn btn-primary" onclick="window.location.href='{{ url('/genres/add') }}'">Add genre</button>
                     </div>
 
                     <table id="films_table">

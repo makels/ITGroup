@@ -10,3 +10,11 @@
 .buttons-wrapper {
     margin: 20px 0;
 }
+
+.genre-list {
+    list-style: none;
+}
+
+.genre-list label {
+    margin-left: 10px;
+}

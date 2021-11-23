@@ -3,9 +3,14 @@ namespace App\Http\Controllers\FilmsManager;
 
 use App\Http\Controllers\Controller;
 use App\Models\Film;
+use App\Models\Genre;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class FilmsManagerController extends Controller
 {
@@ -23,12 +28,47 @@ class FilmsManagerController extends Controller
      */
     public function index(): View
     {
-        return view('home');
+        return view('films');
     }
 
+    /**
+     * @param Request $request
+     * @return View|RedirectResponse
+     */
     public function addFilm(Request $request): View
     {
+        if($request->method() == "POST") {
+            $film_name = $request->post('film_name');
+            $poster_file = "";
+            $genres = $request->post('genre');
+            $poster = $request->file('poster');
+            if(!is_null($poster)) {
+                $poster_file = $poster->getClientOriginalName();
+                $destinationPath = storage_path('/app/public/films_img');
+                $poster->move($destinationPath,$poster_file);
+            }
 
+            $film = new Film();
+            $film->film_name = $film_name;
+            $film->preview_url = url("storage/films_img/" . $poster_file);
+            $film->publish = 0;
+            if($film->save()) {
+                foreach ($genres as $genre_id => $checked) {
+                    if($checked == "on") {
+                        $genres = new FilmGenre();
+                        $genres->film_id = $film->id;
+                        $genres->genre_id = $genre_id;
+                        $genres->save();
+                    }
+                }
+            }
+            return Redirect::route("films");
+        } else {
+            $genres = Genre::all();
+            return view("film_add",[
+                "genres" => $genres
+            ]);
+        }
     }
 
     public function deleteFilm(Request $request): View
@@ -62,8 +102,6 @@ class FilmsManagerController extends Controller
         return response()->json([
             "data" => $list,
             "recordsTotal" => $filmModel->getTotalCount($searchValue),
-            "totalPages" => 3,
-            "currentPage" => 1
         ]);
     }
 

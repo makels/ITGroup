@@ -31,6 +31,8 @@ Route::group([
     'prefix' => 'films',
     'middleware' => 'auth',
 ], function () {
+    Route::get('/', [FilmsManagerController::class, 'index'])->name('films');
+    Route::get('add', [FilmsManagerController::class, 'addFilm'])->name('add_film');
     Route::post('add', [FilmsManagerController::class, 'addFilm'])->name('add_film');
     Route::post('delete/{item_id}', [FilmsManagerController::class, 'deleteFilm'])->name('delete_film');
     Route::post('list', [FilmsManagerController::class, 'getList'])->name('get_list');
@@ -46,6 +48,7 @@ Route::group([
     'prefix' => 'genres',
     'middleware' => 'auth',
 ], function () {
+    Route::get('/', [GenresController::class, 'index'])->name('genres');
     Route::post('add', [GenresController::class, 'addGenre'])->name('add_genre');
     Route::post('delete/{item_id}', [GenresController::class, 'deleteGenre'])->name('delete_genre');
     Route::post('list', [GenresController::class, 'getList'])->name('get_list');

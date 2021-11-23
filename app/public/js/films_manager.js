@@ -7,6 +7,7 @@ let FilmsManager = function() {
 
     this.initComponents = function() {
         let _this = this;
+        let scrf = $("#scrf_token").val();
         $('#films_table').DataTable({
             "ordering": false,
             "bPaginate": true,
@@ -17,7 +18,22 @@ let FilmsManager = function() {
                 "url": "/films/list",
                 "type": "POST",
                 "data": {
-                    "_token": $("#scrf_token").val()
+                    "_token": scrf
+                }
+            }
+        });
+
+        $('#genres_table').DataTable({
+            "ordering": false,
+            "bPaginate": true,
+            "bFilter": true,
+            "bProcessing": true,
+            "bServerSide": true,
+            "ajax": {
+                "url": "/genres/list",
+                "type": "POST",
+                "data": {
+                    "_token": scrf
                 }
             }
         });

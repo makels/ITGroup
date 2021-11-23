@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Collection;
 class Film extends Model
 {
 
+    public $timestamps = false;
+
     /**
      * Get all films
      * @return array
