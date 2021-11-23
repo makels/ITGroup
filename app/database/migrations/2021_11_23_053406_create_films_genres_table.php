@@ -14,8 +14,18 @@ class CreateFilmsGenresTable extends Migration
     public function up()
     {
         Schema::create('films_genres', function (Blueprint $table) {
-            $table->integer("film_id");
-            $table->integer("genre_id");
+            $table->bigInteger("film_id")->unsigned();
+            $table->bigInteger("genre_id")->unsigned();
+
+            $table->foreign("film_id")
+                ->on("films")
+                ->references("id")
+                ->onDelete("cascade");
+
+            $table->foreign("genre_id")
+                ->on("genres")
+                ->references("id")
+                ->onDelete("cascade");
         });
     }
 
