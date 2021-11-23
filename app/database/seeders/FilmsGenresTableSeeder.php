@@ -14,28 +14,38 @@ class FilmsGenresTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('films_genres')->delete();
-        
+
         \DB::table('films_genres')->insert(array (
-            0 => 
+            0 =>
             array (
                 'film_id' => 1,
                 'genre_id' => 1,
             ),
-            1 => 
+            1 =>
             array (
                 'film_id' => 2,
                 'genre_id' => 4,
             ),
-            2 => 
+            2 =>
             array (
                 'film_id' => 3,
                 'genre_id' => 2,
             ),
+            3 =>
+                array (
+                    'film_id' => 3,
+                    'genre_id' => 1,
+                ),
+            4 =>
+                array (
+                    'film_id' => 3,
+                    'genre_id' => 3,
+                ),
         ));
-        
-        
+
+
     }
 }
