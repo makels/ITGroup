@@ -1,5 +1,6 @@
 .idea/
 .git
+push.sh
 /app/vendor
 /app/node_modules
 /app/public/hot
